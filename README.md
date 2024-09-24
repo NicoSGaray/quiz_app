@@ -1,8 +1,13 @@
 # quiz_app
 
-A new Flutter project.
+A Short Flutter Quiz Mobile App made using Flutter
 
-## Getting Started
+## Project Goals
+
+- To be able to use Stateless Widgets throughout the project to utilize dynamic code.
+- To pratice different ui disigning tools to make a nice looking app.
+
+
 
 This project is a starting point for a Flutter application.
 
