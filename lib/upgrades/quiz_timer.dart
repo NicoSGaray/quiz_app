@@ -58,7 +58,9 @@ class _QuizTimerState extends State<QuizTimer> {
   Widget build(BuildContext context) {
     return Text(
       'Time Remaining: $_remainingTime seconds',
-      style: TextStyle(fontSize: 20, color: _remainingTime <= 10 ? Colors.red : Colors.black),
+      style: TextStyle(
+          fontSize: 20,
+          color: _remainingTime <= 10 ? Colors.red : Colors.black),
     );
   }
 }

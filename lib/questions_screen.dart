@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/answer_button.dart';
 import 'package:quiz_app/data/questions.dart';
+import 'package:quiz_app/upgrades/quiz_progress_bar.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({super.key,
-   required this.onSelectAnswer
-   });
+  const QuestionsScreen({super.key, required this.onSelectAnswer});
 
   final void Function(String answer) onSelectAnswer;
 
@@ -38,6 +37,12 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            QuizProgressBar(
+              // Added for progress bar
+              currentQuestionIndex: currentQuestionIndex,
+              totalQuestions: questions.length,
+            ),
+            const SizedBox(height: 30),
             Text(
               currentQuestion.text,
               style: GoogleFonts.lato(
