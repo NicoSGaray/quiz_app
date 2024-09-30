@@ -1,5 +1,4 @@
 //Nico Garay
-//
 //This method creates a timer that sends you to the next question if you run out of time
 
 import 'dart:async';
