@@ -38,9 +38,8 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
     }
   }
 
-  // Method to handle when the timer reaches zero
+  //Method to handle when the timer reaches zero
   void handleTimeEnd() {
-    // Automatically move to the next question
     moveToNextQuestion();
   }
 
@@ -56,7 +55,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Implement the QuizTimer widget
+            //QuizTimer widget
             Center(
               child: QuizTimer(
                 key: _quizTimerKey,
@@ -86,8 +85,8 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
             }),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+              // Added for progress bar
               child: QuizProgressBar(
-                // Added for progress bar
                 currentQuestionIndex: currentQuestionIndex,
                 totalQuestions: questions.length,
               ),

@@ -1,7 +1,6 @@
 //Nico Garay
 //
-//Quiz timer that if timer goes to 0 the quiz question ends,
-// sends you to the next page, and all unanswered questions are marked incorrect.
+//This method creates a timer that sends you to the next question if you run out of time
 
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -50,15 +49,15 @@ class QuizTimerState extends State<QuizTimer> {
         setState(() {
           _remainingTime--;
         });
-        widget.onTimeUpdate(_remainingTime); // Update parent widget
+        widget.onTimeUpdate(_remainingTime); // Update widget
       } else {
         _timer?.cancel();
-        widget.onTimeEnd(); // Notify parent when the timer reaches zero
+        widget.onTimeEnd(); // Notify widget when the timer reaches zero
       }
     });
   }
 
-  // Expose a method to restart the timer from the parent widget
+  //Restart the timer from the widget
   void restartTimer() {
     startTimer();
   }
@@ -70,11 +69,11 @@ class QuizTimerState extends State<QuizTimer> {
         children: [
           TextSpan(
               text: '$_remainingTime seconds',
-              style: TextStyle(
+              style: GoogleFonts.lato(
                 fontSize: 35,
                 color: _remainingTime <= 5
                     ? Colors.red
-                    : Colors.white, // White initially, then red when <= 10
+                    : Colors.white, //Colored change to insentivise picking a answer
                 fontWeight: FontWeight.bold,
               )),
         ],
