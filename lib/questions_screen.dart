@@ -18,7 +18,7 @@ class QuestionsScreen extends StatefulWidget {
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
   var currentQuestionIndex = 0;
-   final int totalTimePerQuestion = 10; // Set time per question in seconds
+  final int totalTimePerQuestion = 10; // Set time per question in seconds
   final GlobalKey<QuizTimerState> _quizTimerKey =
       GlobalKey<QuizTimerState>(); // Key to control the QuizTimer
 
