@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/answer_button.dart';
 import 'package:quiz_app/data/questions.dart';
 import 'package:quiz_app/upgrades/quiz_progress_bar.dart';
+import 'package:quiz_app/upgrades/quiz_timer.dart';
 
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({super.key, required this.onSelectAnswer});
@@ -17,12 +18,30 @@ class QuestionsScreen extends StatefulWidget {
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
   var currentQuestionIndex = 0;
+   final int totalTimePerQuestion = 10; // Set time per question in seconds
+  final GlobalKey<QuizTimerState> _quizTimerKey =
+      GlobalKey<QuizTimerState>(); // Key to control the QuizTimer
 
+  // Method to handle answer selection
   void answerQuestion(String selectedAnswer) {
     widget.onSelectAnswer(selectedAnswer);
-    setState(() {
-      currentQuestionIndex++;
-    });
+    moveToNextQuestion();
+  }
+
+  // Method to move to the next question
+  void moveToNextQuestion() {
+    if (currentQuestionIndex < questions.length - 1) {
+      setState(() {
+        currentQuestionIndex++;
+      });
+      _quizTimerKey.currentState?.restartTimer(); // Restart the timer
+    }
+  }
+
+  // Method to handle when the timer reaches zero
+  void handleTimeEnd() {
+    // Automatically move to the next question
+    moveToNextQuestion();
   }
 
   @override
@@ -37,10 +56,14 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            QuizProgressBar(
-              // Added for progress bar
-              currentQuestionIndex: currentQuestionIndex,
-              totalQuestions: questions.length,
+            // Implement the QuizTimer widget
+            Center(
+              child: QuizTimer(
+                key: _quizTimerKey,
+                totalTime: totalTimePerQuestion,
+                onTimeUpdate: (remainingTime) {},
+                onTimeEnd: handleTimeEnd,
+              ),
             ),
             const SizedBox(height: 30),
             Text(
@@ -60,10 +83,19 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                   answerQuestion(answer);
                 },
               );
-            })
+            }),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+              child: QuizProgressBar(
+                // Added for progress bar
+                currentQuestionIndex: currentQuestionIndex,
+                totalQuestions: questions.length,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
+

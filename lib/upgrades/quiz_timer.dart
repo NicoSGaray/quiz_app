@@ -5,9 +5,10 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class QuizTimer extends StatefulWidget {
-  final int totalTime; // Total time in seconds for the timer
+  final int totalTime; // Total time in seconds for each question
   final ValueChanged<int> onTimeUpdate; // Callback to send remaining time
   final VoidCallback onTimeEnd; // Callback when the timer reaches zero
 
@@ -19,10 +20,10 @@ class QuizTimer extends StatefulWidget {
   });
 
   @override
-  _QuizTimerState createState() => _QuizTimerState();
+  QuizTimerState createState() => QuizTimerState();
 }
 
-class _QuizTimerState extends State<QuizTimer> {
+class QuizTimerState extends State<QuizTimer> {
   late int _remainingTime;
   Timer? _timer;
 
@@ -39,8 +40,11 @@ class _QuizTimerState extends State<QuizTimer> {
     super.dispose();
   }
 
-  // Method to start the countdown timer
+  // Method to start or restart the timer
   void startTimer() {
+    _timer?.cancel(); // Cancel any existing timer before starting a new one
+    _remainingTime = widget.totalTime; // Reset the remaining time
+
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_remainingTime > 0) {
         setState(() {
@@ -54,13 +58,27 @@ class _QuizTimerState extends State<QuizTimer> {
     });
   }
 
+  // Expose a method to restart the timer from the parent widget
+  void restartTimer() {
+    startTimer();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Time Remaining: $_remainingTime seconds',
-      style: TextStyle(
-          fontSize: 20,
-          color: _remainingTime <= 10 ? Colors.red : Colors.black),
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+              text: '$_remainingTime seconds',
+              style: TextStyle(
+                fontSize: 35,
+                color: _remainingTime <= 5
+                    ? Colors.red
+                    : Colors.white, // White initially, then red when <= 10
+                fontWeight: FontWeight.bold,
+              )),
+        ],
+      ),
     );
   }
 }
